@@ -108,29 +108,49 @@ namespace Battleship
                 if (r == 1) isHori[i] = true;
                 else isHori[i] = false;
             }
-
             // Place the ships
             for (int i = 0; i < lengthOfShips.Length; i++)
             {
                 if (isHori[i]) //Place all the horizontal ships
-                {
                     while (true)
                     {
-                        int xy = random.Next(boardLength) * 10 + random.Next(boardLength);
-                        if (xy % 10 + lengthOfShips[i] >= boardLength) continue;// ship coordinate cant collide with board-end
+                        int xy = random.Next(boardLength) * 10 + random.Next(boardLength); // Random startcoordinate for new ship
+                        if (xy % 10 + lengthOfShips[i] > boardLength) continue;// ship coordinate cant collide with board-end
                         foreach (Ship ship in generatedShips) // Loops through already placed ships
-                            if ((xy > (ship.Coordinates[0] - lengthOfShips[i])) &&
-                                (((ship.Coordinates[ship.Coordinates.Count - 1] + 1) + lengthOfShips[i]) % 10) > boardLength)
-                                continue; // ship coordinates cant collide with generated ships
+                        {
+                            // Collision with horizontal ships
+                            if (ship.IsHorizontal && (xy > ship.Coordinates[0] - lengthOfShips[i]) && ((ship.Coordinates[ship.Coordinates.Count - 1] + 1 + lengthOfShips[i]) % 10 > boardLength)) continue;
+                            // Collision with vertical ships
+                            foreach (int coor in ship.Coordinates) if (xy > coor - lengthOfShips[i] && xy <= coor) continue;
+                         }
                         //Create a Ship and add it to the list
                         List<int> shipCoordinate = new List<int>();
                         for (int j = 0; j < lengthOfShips[i]; j++) shipCoordinate.Add(xy + j);
                         generatedShips.Add(new Ship(shipCoordinate));
                         break;
                     }
-                }
                 else // Place all the vertical ships
                 {
+                    while (true)
+                    {
+                        int xy = random.Next(boardLength) * 10 + random.Next(boardLength); // Random startcoordinate for new ship
+                        if (xy + lengthOfShips[i] * 10 > boardLength * 10 + xy % 10) continue;// ship coordinate cant collide with board-end
+                        foreach (Ship ship in generatedShips) // Loops through already placed ships
+                        {
+                            // Collision with vertical ships
+                            if ((xy % 10 == ship.Coordinates[0] % 10) && (xy/10 > ship.Coordinates[0]/10 - lengthOfShips[i]) && (xy/10 <= ship.Coordinates[ship.Coordinates.Count-1])) continue;
+                            // Collision with horizontal ships
+                            foreach(int coor in ship.Coordinates)
+                            {
+                                if ((xy % 10 == ship.Coordinates[0] % 10) && (xy / 10 > coor / 10 - lengthOfShips[i]) && xy / 10 < coor / 10) continue;
+                            }
+                        }
+                        //Create a Ship and add it to the list
+                        List<int> shipCoordinate = new List<int>();
+                        for (int j = 0; j < lengthOfShips[i]; j++) shipCoordinate.Add(xy + j * 10);
+                        generatedShips.Add(new Ship(shipCoordinate));
+                        break;
+                    }
                 }
             }
             return generatedShips.ToArray();
