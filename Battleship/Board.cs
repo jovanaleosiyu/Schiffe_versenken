@@ -13,22 +13,24 @@ namespace Battleship
 {
     public class Board
     {
+        // Constants
+        const int boardLength = 9; // 9x9 Fields
+        int[] lengthOfShips = { 5, 4, 3, 3, 2, 2 }; // Length of every ship
+        // Ships: 1x5; 1x4; 2x3; 2x2
+        // Properties
         public Ship[] Ships { get; set; }
         public List<int> HitShips { get; set; }
         public Rectangle[,] Fields { get; set; }
         public Grid BoardGrid { get; set; }
+        // Constructor
         public Board()
         {
+            GenerateShips();
             HitShips = new List<int>();
-            //Test Ships
-            Ships = new Ship[] {
-                new Ship(new List<int>() { 00, 01, 02 }),
-                new Ship(new List<int>() { 58, 68, 78, 88 })
-                //new Ship(new List<int>() { 158, 148, 138, 128})
-            };
+            Ships = GenerateShips();
             BoardGrid = new Grid();
             // Generate fields
-            Fields = new Rectangle[9, 9];
+            Fields = new Rectangle[boardLength, boardLength];
             for (int i = 0; i < Fields.GetLength(0); i++)
             {
                 BoardGrid.ColumnDefinitions.Add(new ColumnDefinition());
@@ -45,6 +47,9 @@ namespace Battleship
                 }
             }
         }
+        /// <summary>
+        /// Event beim Anklicken von einem Feld
+        /// </summary>
         public void Click(object sender, RoutedEventArgs e)
         {
             Rectangle rec = (Rectangle)sender;
@@ -54,7 +59,7 @@ namespace Battleship
             {
                 for (int j = 0; j < Fields.GetLength(1); j++)
                 {
-                    if(Fields[i,j] == rec)
+                    if (Fields[i, j] == rec)
                     {
                         //MessageBox.Show(string.Format("{0}, {1}", i, j));
                         x = i;
@@ -63,13 +68,13 @@ namespace Battleship
                     }
                 }
             }
-            if(HitShips.Contains(x * 10 + y)) return;
+            if (HitShips.Contains(x * 10 + y)) return;
             bool hit = false;
-            foreach(Ship ship in Ships)
+            foreach (Ship ship in Ships)
             {
-                foreach(int coordinate in ship.Coordinates)
+                foreach (int coordinate in ship.Coordinates)
                 {
-                    if( ((coordinate < 10) && (x == 0 && y == coordinate)) || (x == coordinate / 10 && y == coordinate % 10))
+                    if (((coordinate < 10) && (x == 0 && y == coordinate)) || (x == coordinate / 10 && y == coordinate % 10))
                     {
                         ship.Coordinates.Remove(coordinate);
                         rec.Fill = new ImageBrush(new BitmapImage(new Uri(@"..\..\Images\ShipHit.png", UriKind.Relative)));
@@ -85,6 +90,50 @@ namespace Battleship
                 rec.Fill = new ImageBrush(new BitmapImage(new Uri(@"..\..\Images\WaterHit.png", UriKind.Relative)));
             }
 
-        }   
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public Ship[] GenerateShips()
+        {
+            Random random = new Random();
+            List<Ship> generatedShips = new List<Ship>();
+            bool[] isHori = new bool[lengthOfShips.Length]; // horizontal = true, vertical = false 
+
+            // Random if the ship is horizontal or vertical
+            for (int i = 0; i < lengthOfShips.Length; i++)
+            {
+                int r = random.Next(2);
+                if (r == 1) isHori[i] = true;
+                else isHori[i] = false;
+            }
+
+            // Place the ships
+            for (int i = 0; i < lengthOfShips.Length; i++)
+            {
+                if (isHori[i]) //Place all the horizontal ships
+                {
+                    while (true)
+                    {
+                        int xy = random.Next(boardLength) * 10 + random.Next(boardLength);
+                        if (xy % 10 + lengthOfShips[i] >= boardLength) continue;// ship coordinate cant collide with board-end
+                        foreach (Ship ship in generatedShips) // Loops through already placed ships
+                            if ((xy > (ship.Coordinates[0] - lengthOfShips[i])) &&
+                                (((ship.Coordinates[ship.Coordinates.Count - 1] + 1) + lengthOfShips[i]) % 10) > boardLength)
+                                continue; // ship coordinates cant collide with generated ships
+                        //Create a Ship and add it to the list
+                        List<int> shipCoordinate = new List<int>();
+                        for (int j = 0; j < lengthOfShips[i]; j++) shipCoordinate.Add(xy + j);
+                        generatedShips.Add(new Ship(shipCoordinate));
+                        break;
+                    }
+                }
+                else // Place all the vertical ships
+                {
+                }
+            }
+            return generatedShips.ToArray();
+        }
     }
 }

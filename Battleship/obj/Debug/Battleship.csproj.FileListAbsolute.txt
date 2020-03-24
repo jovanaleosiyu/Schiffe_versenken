@@ -12,3 +12,17 @@ C:\Users\Startklar\Desktop\Battleship\Battleship\obj\Debug\Battleship.Properties
 C:\Users\Startklar\Desktop\Battleship\Battleship\obj\Debug\Battleship.csproj.GenerateResource.cache
 C:\Users\Startklar\Desktop\Battleship\Battleship\obj\Debug\Battleship.exe
 C:\Users\Startklar\Desktop\Battleship\Battleship\obj\Debug\Battleship.pdb
+C:\Users\Startklar\Documents\schule\htl\1920\medt\2. Semester\Battleship\Battleship\bin\Debug\Battleship.exe.config
+C:\Users\Startklar\Documents\schule\htl\1920\medt\2. Semester\Battleship\Battleship\bin\Debug\Battleship.exe
+C:\Users\Startklar\Documents\schule\htl\1920\medt\2. Semester\Battleship\Battleship\bin\Debug\Battleship.pdb
+C:\Users\Startklar\Documents\schule\htl\1920\medt\2. Semester\Battleship\Battleship\obj\Debug\Battleship.csprojAssemblyReference.cache
+C:\Users\Startklar\Documents\schule\htl\1920\medt\2. Semester\Battleship\Battleship\obj\Debug\MainWindow.g.cs
+C:\Users\Startklar\Documents\schule\htl\1920\medt\2. Semester\Battleship\Battleship\obj\Debug\App.g.cs
+C:\Users\Startklar\Documents\schule\htl\1920\medt\2. Semester\Battleship\Battleship\obj\Debug\Battleship_MarkupCompile.cache
+C:\Users\Startklar\Documents\schule\htl\1920\medt\2. Semester\Battleship\Battleship\obj\Debug\Battleship_MarkupCompile.lref
+C:\Users\Startklar\Documents\schule\htl\1920\medt\2. Semester\Battleship\Battleship\obj\Debug\MainWindow.baml
+C:\Users\Startklar\Documents\schule\htl\1920\medt\2. Semester\Battleship\Battleship\obj\Debug\Battleship.g.resources
+C:\Users\Startklar\Documents\schule\htl\1920\medt\2. Semester\Battleship\Battleship\obj\Debug\Battleship.Properties.Resources.resources
+C:\Users\Startklar\Documents\schule\htl\1920\medt\2. Semester\Battleship\Battleship\obj\Debug\Battleship.csproj.GenerateResource.cache
+C:\Users\Startklar\Documents\schule\htl\1920\medt\2. Semester\Battleship\Battleship\obj\Debug\Battleship.exe
+C:\Users\Startklar\Documents\schule\htl\1920\medt\2. Semester\Battleship\Battleship\obj\Debug\Battleship.pdb
