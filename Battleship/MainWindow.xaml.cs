@@ -31,7 +31,7 @@ namespace Battleship
             List<int> nums = new List<int>();
             foreach(Ship ship in board.Ships)
             {
-                s += ship.IsHorizontal ?"Horizontal: ":"Vertical: ";
+                s += ship.IsHorizontal ? "Horizontal: " : "Vertical: ";
                 foreach(int coor in ship.Coordinates)
                 {
                     s += coor.ToString() + " ";
@@ -44,7 +44,7 @@ namespace Battleship
             int b = nums[0];
             for(int i=1; i<nums.Count; i++)
             {
-                if (nums[i] == b) MessageBox.Show(b.ToString(), "FEHLER");
+                if (nums[i] == b) MessageBox.Show(b.ToString(), "ERROR");
                 b = nums[i];
                 s += nums[i].ToString() + " ";
             }

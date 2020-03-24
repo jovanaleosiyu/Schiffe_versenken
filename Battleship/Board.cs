@@ -51,7 +51,7 @@ namespace Battleship
             }
         }
         /// <summary>
-        /// Event beim Anklicken von einem Feld
+        /// Event when field is clicked
         /// </summary>
         public void Click(object sender, RoutedEventArgs e)
         {
@@ -111,7 +111,7 @@ namespace Battleship
                         collided = false;
                         int xy = random.Next(boardLength) * 10 + random.Next(boardLength); // Random startcoordinate for new ship
                         if (xy % 10 + lengthOfShips[i] > boardLength) continue;// ship coordinate cant collide with board-end
-                        foreach (Ship ship in generatedShips) // Loops through already placed ships
+                        foreach (Ship ship in generatedShips)   // Loops through already placed ships
                         {
                             // Collision with horizontal ships
                             if (ship.IsHorizontal && (xy > ship.Coordinates[0] - lengthOfShips[i]) && ((ship.Coordinates[ship.Coordinates.Count - 1] + 1 + lengthOfShips[i]) % 10 > boardLength))
