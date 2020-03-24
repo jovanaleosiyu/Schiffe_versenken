@@ -22,16 +22,19 @@ namespace Battleship
         public List<int> HitShips { get; set; }
         public Rectangle[,] Fields { get; set; }
         public Grid BoardGrid { get; set; }
-        // Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public Board()
         {
-            GenerateShips();
+            // Initializing
             HitShips = new List<int>();
-            Ships = GenerateShips();
             BoardGrid = new Grid();
-            // Generate fields
+            // Setting Ship
+            Ships = GenerateShips();
+            // Generate fields/Board
             Fields = new Rectangle[boardLength, boardLength];
-            for (int i = 0; i < Fields.GetLength(0); i++)
+            for (int i = 0; i < boardLength; i++)
             {
                 BoardGrid.ColumnDefinitions.Add(new ColumnDefinition());
                 BoardGrid.RowDefinitions.Add(new RowDefinition());
@@ -55,52 +58,42 @@ namespace Battleship
             Rectangle rec = (Rectangle)sender;
             int x = 0;
             int y = 0;
-            for (int i = 0; i < Fields.GetLength(0); i++)
-            {
-                for (int j = 0; j < Fields.GetLength(1); j++)
-                {
+            // Searching for clicked rectangle in array, to get coordinates
+            for (int i = 0; i < boardLength; i++) 
+                for (int j = 0; j < boardLength; j++)
                     if (Fields[i, j] == rec)
                     {
-                        //MessageBox.Show(string.Format("{0}, {1}", i, j));
+                        MessageBox.Show(string.Format("{0}, {1}", i, j));
                         x = i;
                         y = j;
                         break;
                     }
-                }
-            }
+            // Already hit
             if (HitShips.Contains(x * 10 + y)) return;
+            // Check every ship to match the clicked coordinate
             bool hit = false;
-            foreach (Ship ship in Ships)
-            {
+            foreach (Ship ship in Ships) 
                 foreach (int coordinate in ship.Coordinates)
-                {
-                    if (((coordinate < 10) && (x == 0 && y == coordinate)) || (x == coordinate / 10 && y == coordinate % 10))
+                    if ( x * 10 + y == coordinate) // if ship coordinate is clicked coordinate
                     {
-                        ship.Coordinates.Remove(coordinate);
-                        rec.Fill = new ImageBrush(new BitmapImage(new Uri(@"..\..\Images\ShipHit.png", UriKind.Relative)));
-                        if (ship.Coordinates.Count <= 0) MessageBox.Show("BOOM!!");
                         hit = true;
                         HitShips.Add(coordinate);
+                        ship.Coordinates.Remove(coordinate);
+                        rec.Fill = new ImageBrush(new BitmapImage(new Uri(@"..\..\Images\ShipHit.png", UriKind.Relative)));
+                        if (ship.Coordinates.Count == 0) MessageBox.Show("BOOM!!");
                         break;
                     }
-                }
-            }
-            if (!hit)
-            {
-                rec.Fill = new ImageBrush(new BitmapImage(new Uri(@"..\..\Images\WaterHit.png", UriKind.Relative)));
-            }
-
+            // if not hit
+            if (!hit) rec.Fill = new ImageBrush(new BitmapImage(new Uri(@"..\..\Images\WaterHit.png", UriKind.Relative)));
         }
         /// <summary>
-        /// 
+        /// Returns an array of ships with random coordinates (that dont collide)
         /// </summary>
-        /// <returns></returns>
         public Ship[] GenerateShips()
         {
             Random random = new Random();
             List<Ship> generatedShips = new List<Ship>();
             bool[] isHori = new bool[lengthOfShips.Length]; // horizontal = true, vertical = false 
-
             // Random if the ship is horizontal or vertical
             for (int i = 0; i < lengthOfShips.Length; i++)
             {

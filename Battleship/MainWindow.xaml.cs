@@ -23,10 +23,17 @@ namespace Battleship
         public MainWindow()
         {
             InitializeComponent();
-            Board enemyBoard = new Board();
-            enemyBoard.BoardGrid.Width = 600;
-            enemyBoard.BoardGrid.Height = 600;
-            MyGrid.Children.Add(enemyBoard.BoardGrid);
+            Board board = new Board();
+            board.BoardGrid.Width = 600;
+            board.BoardGrid.Height = 600;
+            MyGrid.Children.Add(board.BoardGrid);
+            string s = "";
+            foreach(Ship ship in board.Ships)
+            {
+                foreach(int coor in ship.Coordinates) s += coor.ToString() + " ";
+                s += "\n";
+            }
+            Ausgabe.Text = s;
         }
         
     }
