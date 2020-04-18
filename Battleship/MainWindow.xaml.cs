@@ -20,13 +20,24 @@ namespace Battleship
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        GameWindow player = new GameWindow();
+        GameWindow computer = new GameWindow();
+        public MainWindow() 
         {
             InitializeComponent();
-            Board board = new Board();
-            board.BoardGrid.Width = 600;
-            board.BoardGrid.Height = 600;
-            MyGrid.Children.Add(board.BoardGrid);
+            this.Visibility = Visibility.Hidden;
+            //Computer
+            computer.Title = "Computer";
+            computer.OwnBoard.Ships = Board.GenerateShips();
+            computer.OwnBoard.SSOOG();
+            //Player
+            player.Title = "Player";
+            player.OwnBoard.Ships = Board.GenerateShips(); // später ui schiffe platzieren
+            player.OwnBoard.SSOOG();
+
+            computer.Show();
+            player.Show();
+            /* Error
             string s = "";
             List<int> nums = new List<int>();
             foreach(Ship ship in board.Ships)
@@ -49,6 +60,7 @@ namespace Battleship
                 s += nums[i].ToString() + " ";
             }
             Ausgabe.Text = s;
+            */
         }
         
     }

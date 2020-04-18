@@ -26,3 +26,5 @@ C:\Users\Startklar\Documents\schule\htl\1920\medt\2. Semester\Battleship\Battles
 C:\Users\Startklar\Documents\schule\htl\1920\medt\2. Semester\Battleship\Battleship\obj\Debug\Battleship.csproj.GenerateResource.cache
 C:\Users\Startklar\Documents\schule\htl\1920\medt\2. Semester\Battleship\Battleship\obj\Debug\Battleship.exe
 C:\Users\Startklar\Documents\schule\htl\1920\medt\2. Semester\Battleship\Battleship\obj\Debug\Battleship.pdb
+C:\Users\Startklar\Documents\schule\htl\1920\medt\2. Semester\Battleship\Battleship\obj\Debug\GameWindow.g.cs
+C:\Users\Startklar\Documents\schule\htl\1920\medt\2. Semester\Battleship\Battleship\obj\Debug\GameWindow.baml

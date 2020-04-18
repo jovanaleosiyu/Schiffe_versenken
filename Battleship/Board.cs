@@ -15,13 +15,15 @@ namespace Battleship
     {
         // Constants
         const int boardLength = 9; // 9x9 Fields
-        int[] lengthOfShips = { 5, 4, 3, 3, 2, 2 }; // Length of every ship
+        static int[] lengthOfShips = { 5, 4, 3, 3, 2, 2 }; // Length of every ship
         // Ships: 1x5; 1x4; 2x3; 2x2
         // Properties
         public Ship[] Ships { get; set; }
         public List<int> HitShips { get; set; }
         public Rectangle[,] Fields { get; set; }
         public Grid BoardGrid { get; set; }
+        public Grid OpenBoardGrid { get; }
+        public Rectangle[,] OpenBoardFields { get; set; }
         /// <summary>
         /// Constructor
         /// </summary>
@@ -30,20 +32,28 @@ namespace Battleship
             // Initializing
             HitShips = new List<int>();
             BoardGrid = new Grid();
-            // Setting Ship
-            Ships = GenerateShips();
+            OpenBoardGrid = new Grid();
             // Generate fields/Board
             Fields = new Rectangle[boardLength, boardLength];
+            OpenBoardFields = new Rectangle[boardLength, boardLength];
             for (int i = 0; i < boardLength; i++)
             {
                 BoardGrid.ColumnDefinitions.Add(new ColumnDefinition());
                 BoardGrid.RowDefinitions.Add(new RowDefinition());
+                OpenBoardGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                OpenBoardGrid.RowDefinitions.Add(new RowDefinition());
                 for (int j = 0; j < Fields.GetLength(1); j++)
                 {
                     Rectangle rec = new Rectangle();
+                    Rectangle ofrec = new Rectangle();
                     Grid.SetRow(rec, i);
                     Grid.SetColumn(rec, j);
+                    Grid.SetRow(ofrec, i);
+                    Grid.SetColumn(ofrec, j);
                     rec.Fill = new ImageBrush(new BitmapImage(new Uri(@"..\..\Images\Water.png", UriKind.Relative)));
+                    ofrec.Fill = new ImageBrush(new BitmapImage(new Uri(@"..\..\Images\Water.png", UriKind.Relative)));
+                    OpenBoardFields[i, j] = ofrec;
+                    OpenBoardGrid.Children.Add(OpenBoardFields[i, j]);
                     rec.AddHandler(UIElement.MouseDownEvent, new RoutedEventHandler(Click));
                     Fields[i, j] = rec;
                     BoardGrid.Children.Add(Fields[i, j]);
@@ -59,7 +69,7 @@ namespace Battleship
             int x = 0;
             int y = 0;
             // Searching for clicked rectangle in array, to get coordinates
-            for (int i = 0; i < boardLength; i++) 
+            for (int i = 0; i < boardLength; i++)
                 for (int j = 0; j < boardLength; j++)
                     if (Fields[i, j] == rec)
                     {
@@ -72,24 +82,29 @@ namespace Battleship
             if (HitShips.Contains(x * 10 + y)) return;
             // Check every ship to match the clicked coordinate
             bool hit = false;
-            foreach (Ship ship in Ships) 
+            foreach (Ship ship in Ships)
                 foreach (int coordinate in ship.Coordinates)
-                    if ( x * 10 + y == coordinate) // if ship coordinate is clicked coordinate
+                    if (x * 10 + y == coordinate) // if ship coordinate is clicked coordinate
                     {
                         hit = true;
                         HitShips.Add(coordinate);
                         ship.Coordinates.Remove(coordinate);
                         rec.Fill = new ImageBrush(new BitmapImage(new Uri(@"..\..\Images\ShipHit.png", UriKind.Relative)));
+                        OpenBoardFields[x, y].Fill = new ImageBrush(new BitmapImage(new Uri(@"..\..\Images\ShipHit.png", UriKind.Relative)));
                         if (ship.Coordinates.Count == 0) MessageBox.Show("BOOM!!");
                         break;
                     }
             // if not hit
-            if (!hit) rec.Fill = new ImageBrush(new BitmapImage(new Uri(@"..\..\Images\WaterHit.png", UriKind.Relative)));
+            if (!hit)
+            {
+                rec.Fill = new ImageBrush(new BitmapImage(new Uri(@"..\..\Images\WaterHit.png", UriKind.Relative)));
+                OpenBoardFields[x, y].Fill = new ImageBrush(new BitmapImage(new Uri(@"..\..\Images\WaterHit.png", UriKind.Relative)));
+            }
         }
         /// <summary>
         /// Returns an array of ships with random coordinates (that dont collide)
         /// </summary>
-        public Ship[] GenerateShips()
+        public static Ship[] GenerateShips()
         {
             Random random = new Random();
             List<Ship> generatedShips = new List<Ship>();
@@ -120,13 +135,13 @@ namespace Battleship
                                 break;
                             }
                             // Collision with vertical ships
-                            foreach (int coor in ship.Coordinates) 
+                            foreach (int coor in ship.Coordinates)
                                 if (xy > coor - lengthOfShips[i] && xy <= coor)
                                 {
                                     collided = true;
                                     break;
                                 }
-                         }
+                        }
                         //Create a Ship and add it to the list
                         if (!collided)
                         {
@@ -157,7 +172,7 @@ namespace Battleship
                                 {
                                     collided = true;
                                     break;
-                                } 
+                                }
                         }
                         //Create a Ship and add it to the list
                         if (!collided)
@@ -171,6 +186,19 @@ namespace Battleship
                 }
             }
             return generatedShips.ToArray();
+        }
+        /// <summary>
+        /// ShowShipsOnOpenGrid
+        /// </summary>
+        public void SSOOG()
+        {
+            foreach (Ship ship in Ships)
+            {
+                foreach(int coor in ship.Coordinates)
+                {
+                    OpenBoardFields[coor / 10, coor % 10].Fill = new ImageBrush(new BitmapImage(new Uri(@"..\..\Images\Ship.png", UriKind.Relative)));
+                }    
+            }
         }
     }
 }
