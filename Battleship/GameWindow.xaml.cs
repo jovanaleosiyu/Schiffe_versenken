@@ -19,26 +19,24 @@ namespace Battleship
     /// </summary>
     public partial class GameWindow : Window
     {
-        const int GridLength = 300; //800
+        const int GridLength = 500; //800
         public Board EnemyBoard { get; set; }
         public Board OwnBoard { get; set; }
-        public GameWindow()
+        public GameWindow(Board enemyBoard, Board ownBoard)
         {
             InitializeComponent();
+            EnemyBoard = enemyBoard;
+            OwnBoard = ownBoard;
             //EnemyBoard
-            EnemyBoard = new Board();
             EnemyBoard.BoardGrid.Width = GridLength;
             EnemyBoard.BoardGrid.Height = GridLength;
             EnemyBoard.BoardGrid.Margin = new Thickness(5);
             StackPan.Children.Add(EnemyBoard.BoardGrid);
-            //DockPanel.SetDock(EnemyBoard.BoardGrid, Dock.Left);
             //OwnBoard
-            OwnBoard = new Board();
-            OwnBoard.BoardGrid.Width = GridLength;
-            OwnBoard.BoardGrid.Height = GridLength;
-            OwnBoard.BoardGrid.Margin = new Thickness(5);
+            OwnBoard.OpenBoardGrid.Width = GridLength;
+            OwnBoard.OpenBoardGrid.Height = GridLength;
+            OwnBoard.OpenBoardGrid.Margin = new Thickness(5);
             StackPan.Children.Add(OwnBoard.OpenBoardGrid);
-            //DockPanel.SetDock(OwnBoard.OpenBoardGrid, Dock.Right);
         }
     }
 }

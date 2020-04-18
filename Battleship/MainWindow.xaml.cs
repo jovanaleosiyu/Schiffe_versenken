@@ -20,20 +20,33 @@ namespace Battleship
     /// </summary>
     public partial class MainWindow : Window
     {
-        GameWindow player = new GameWindow();
-        GameWindow computer = new GameWindow();
+        GameWindow player;
+        GameWindow computer;
         public MainWindow() 
         {
             InitializeComponent();
             this.Visibility = Visibility.Hidden;
-            //Computer
-            computer.Title = "Computer";
-            computer.OwnBoard.Ships = Board.GenerateShips();
-            computer.OwnBoard.SSOOG();
             //Player
+            Board playerBoard = new Board();
+            playerBoard.Ships = new Ship[] {
+            new Ship(new List<int>(){03, 04, 05}),
+            new Ship(new List<int>(){33, 43, 53}),
+            new Ship(new List<int>(){67, 68})
+            };
+            ;// später ui schiffe platzieren
+            playerBoard.SSOOG();
+            //Computer
+            Board computerBoard = new Board();
+            computerBoard.Ships = Board.GenerateShips();
+            computerBoard.SSOOG();
+            //Window Configuration
+            computer = new GameWindow(playerBoard, computerBoard);
+            player = new GameWindow(computerBoard, playerBoard);
+
+            computer.Title = "Computer";
             player.Title = "Player";
-            player.OwnBoard.Ships = Board.GenerateShips(); // später ui schiffe platzieren
-            player.OwnBoard.SSOOG();
+            
+
 
             computer.Show();
             player.Show();
