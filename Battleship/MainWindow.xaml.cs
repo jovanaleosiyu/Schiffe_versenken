@@ -23,7 +23,6 @@ namespace Battleship
         GameWindow player;
         GameWindow computer;
         // Variablen für ui
-        Board playerBoard;
         List<Ship> allreadySetShips;
         const int boardLength = 9; // 9x9 Fields
         const int GridLength = 500; // 800
@@ -35,8 +34,6 @@ namespace Battleship
         {
             InitializeComponent();
             allreadySetShips = new List<Ship>();
-            // Player
-            playerBoard = new Board();
             // UI Schiffe platzieren
             Fields = new Rectangle[boardLength, boardLength];
             Grid uiGrid = new Grid();
@@ -55,25 +52,8 @@ namespace Battleship
                     uiGrid.Children.Add(Fields[i, j]);
                 }
             }
-            //
-
-            //
             uiGrid.Width = uiGrid.Height = GridLength;
             MyGrid.Children.Add(uiGrid);
-
-            // Player
-            // playerBoard.SSOOG();
-            // Computer
-            Board computerBoard = new Board();
-            computerBoard.Ships = Board.GenerateShips();
-            computerBoard.SSOOG();
-            // Window Configuration
-            computer = new GameWindow(playerBoard, computerBoard);
-            player = new GameWindow(computerBoard, playerBoard);
-
-            computer.Title = "Computer";
-            player.Title = "Player";
-
         }
         public void Click(object sender, RoutedEventArgs e)
         {
@@ -200,6 +180,26 @@ namespace Battleship
             allreadySetShips.Add(deleteShip);
             deleteShip = null;
             lengthOfShips.RemoveAt(0);
+            if (lengthOfShips.Count <= 0)
+            {
+                this.Visibility = Visibility.Collapsed;
+                // Player
+                Board playerBoard = new Board();
+                playerBoard.Ships = allreadySetShips.ToArray();
+                playerBoard.SSOOG();
+                // Computer
+                Board computerBoard = new Board();
+                computerBoard.Ships = Board.GenerateShips();
+                computerBoard.SSOOG();
+                // Window Configuration
+                computer = new GameWindow(playerBoard, computerBoard);
+                player = new GameWindow(computerBoard, playerBoard);
+                computer.Title = "Computer";
+                player.Title = "Player";
+                player.Show();
+                computer.Show();
+            }
         }
+
     }
 }

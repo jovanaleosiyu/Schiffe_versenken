@@ -161,7 +161,7 @@ namespace Battleship
                         foreach (Ship ship in generatedShips) // Loops through already placed ships
                         {
                             // Collision with vertical ships
-                            if ((xy % 10 == ship.Coordinates[0] % 10) && (xy / 10 > ship.Coordinates[0] / 10 - lengthOfShips[i]) && (xy / 10 <= ship.Coordinates[ship.Coordinates.Count - 1]))
+                            if ((xy % 10 == ship.Coordinates[0] % 10) && (xy / 10 + lengthOfShips[i] > ship.Coordinates[0] / 10) && (xy / 10 <= ship.Coordinates[ship.Coordinates.Count - 1] / 10))
                             {
                                 collided = true;
                                 break;
