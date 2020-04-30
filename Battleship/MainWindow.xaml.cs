@@ -92,31 +92,57 @@ namespace Battleship
                         break;
                     }
             // initializing
+            int xy = x * 10 + y;
             // Check if it would collide
             if (isHori) //Place all the horizontal ships
+            {
                 if (y + lengthOfShips[0] > boardLength)// ship coordinate cant collide with board-end
                 {
                     MessageBox.Show("Du kannst das Schiff nicht hierhersetzen", "Das geht sich nicht aus, Meier");
                     return;
                 }
-            /*
-            foreach (Ship ship in allreadySetShips)   // Loops through already placed ships
-            {
-                // Collision with horizontal ships
-                if (ship.IsHorizontal && (xy > ship.Coordinates[0] - lengthOfShips[i]) && ((ship.Coordinates[ship.Coordinates.Count - 1] + 1 + lengthOfShips[i]) % 10 > boardLength))
+                foreach (Ship ship in allreadySetShips)   // Loops through already placed ships
                 {
-                    collided = true;
-                    break;
-                }
-                // Collision with vertical ships
-                foreach (int coor in ship.Coordinates)
-                    if (xy > coor - lengthOfShips[i] && xy <= coor)
+                    // Collision with horizontal ships
+                    if (ship.IsHorizontal && (x > ship.Coordinates[0] - lengthOfShips[0]) && ((ship.Coordinates[ship.Coordinates.Count - 1] + 1 + lengthOfShips[0]) % 10 > boardLength))
                     {
-                        collided = true;
-                        break;
+                        MessageBox.Show("Du kannst das Schiff nicht hierhersetzen", "Das geht sich nicht aus, Meier");
+                        return;
                     }
+                    // Collision with vertical ships
+                    foreach (int coor in ship.Coordinates)
+                        if (xy > coor - lengthOfShips[0] && xy <= coor)
+                        {
+                            MessageBox.Show("Du kannst das Schiff nicht hierhersetzen", "Das geht sich nicht aus, Meier");
+                            return;
+                        }
+                }
             }
-            */
+            else // Place all the vertical ships
+            {
+                if (xy + lengthOfShips[0] * 10 > boardLength * 10 + xy % 10) // ship coordinate cant collide with board-end
+                {
+                    MessageBox.Show("Du kannst das Schiff nicht hierhersetzen", "Das geht sich nicht aus, Meier");
+                    return;
+                }
+                foreach (Ship ship in allreadySetShips) // Loops through already placed ships
+                {
+                    // Collision with vertical ships
+                    if ((xy % 10 == ship.Coordinates[0] % 10) && (xy/10 + lengthOfShips[0] > ship.Coordinates[0] / 10) && (xy / 10 <= ship.Coordinates[ship.Coordinates.Count - 1]/10))
+                    {
+                        MessageBox.Show("Du kannst das Schiff nicht hierhersetzen", "Das geht sich nicht aus, Meier");
+                        return;
+                    }
+                    // Collision with horizontal ships
+                    foreach (int coor in ship.Coordinates)
+                        if ((xy % 10 == coor % 10) && (xy / 10 > coor / 10 - lengthOfShips[0]) && xy / 10 < coor / 10)
+                        {
+                            MessageBox.Show("Du kannst das Schiff nicht hierhersetzen", "Das geht sich nicht aus, Meier");
+                            return;
+                        }
+                }
+            }
+
             //delete old ship
             if (deleteShip != null)
             {
@@ -127,53 +153,41 @@ namespace Battleship
                 deleteShip = null;
             }
             //Create a Ship and add it to the list
-            List<int> shipCoordinate = new List<int>();
-            for (int j = 0; j < lengthOfShips[0]; j++) {
-                shipCoordinate.Add(x * 10 + y + j);
-                Fields[x,y+j].Fill = new ImageBrush(new BitmapImage(new Uri(@"..\..\Images\NotSetShip.png", UriKind.Relative)));
+            List<int> shipCoordinate;
+            if (isHori)
+            {
+                shipCoordinate = new List<int>();
+                for (int j = 0; j < lengthOfShips[0]; j++)
+                {
+                    shipCoordinate.Add(x * 10 + y + j);
+                    Fields[x, y + j].Fill = new ImageBrush(new BitmapImage(new Uri(@"..\..\Images\NotSetShip.png", UriKind.Relative)));
+                }
+            }
+            else
+            {
+                shipCoordinate = new List<int>();
+                for (int j = 0; j < lengthOfShips[0]; j++)
+                {
+                    shipCoordinate.Add(xy + j * 10);
+                    Fields[x + j, y].Fill = new ImageBrush(new BitmapImage(new Uri(@"..\..\Images\NotSetShip.png", UriKind.Relative)));
+                }
             }
             deleteShip = new Ship(shipCoordinate);
 
-            /*else // Place all the vertical ships
-            {
-                while (true)
-                {
-                    collided = false;
-                    int xy = random.Next(boardLength) * 10 + random.Next(boardLength); // Random startcoordinate for new ship
-                    if (xy + lengthOfShips[i] * 10 > boardLength * 10 + xy % 10) continue;// ship coordinate cant collide with board-end
-                    foreach (Ship ship in generatedShips) // Loops through already placed ships
-                    {
-                        // Collision with vertical ships
-                        if ((xy % 10 == ship.Coordinates[0] % 10) && (xy / 10 > ship.Coordinates[0] / 10 - lengthOfShips[i]) && (xy / 10 <= ship.Coordinates[ship.Coordinates.Count - 1]))
-                        {
-                            collided = true;
-                            break;
-                        }
-                        // Collision with horizontal ships
-                        foreach (int coor in ship.Coordinates)
-                            if ((xy % 10 == coor % 10) && (xy / 10 > coor / 10 - lengthOfShips[i]) && xy / 10 < coor / 10)
-                            {
-                                collided = true;
-                                break;
-                            }
-                    }
-                    //Create a Ship and add it to the list
-                    if (!collided)
-                    {
-                        List<int> shipCoordinate = new List<int>();
-                        for (int j = 0; j < lengthOfShips[i]; j++) shipCoordinate.Add(xy + j * 10);
-                        generatedShips.Add(new Ship(shipCoordinate));
-                        break;
-                    }
-                }
 
-            }
-            */
         }
 
         private void BtnTurn_Click(object sender, RoutedEventArgs e)
         {
             isHori = !isHori;
+            if (deleteShip != null)
+            {
+                foreach (int coor in deleteShip.Coordinates)
+                {
+                    Fields[coor / 10, coor % 10].Fill = new ImageBrush(new BitmapImage(new Uri(@"..\..\Images\Water.png", UriKind.Relative)));
+                }
+                deleteShip = null;
+            }
         }
 
         private void BtnPlace_Click(object sender, RoutedEventArgs e)
@@ -183,6 +197,7 @@ namespace Battleship
             {
                 Fields[coor / 10, coor % 10].Fill = new ImageBrush(new BitmapImage(new Uri(@"..\..\Images\Ship.png", UriKind.Relative)));
             }
+            allreadySetShips.Add(deleteShip);
             deleteShip = null;
             lengthOfShips.RemoveAt(0);
         }
