@@ -22,19 +22,39 @@ namespace Battleship
     {
         GameWindow player;
         GameWindow computer;
+        //Variablen für ui
+        const int boardLength = 9; // 9x9 Fields
+        const int GridLength = 500; //800
+        Rectangle[,] Fields;
         public MainWindow() 
         {
             InitializeComponent();
-            this.Visibility = Visibility.Hidden;
             //Player
             Board playerBoard = new Board();
-            playerBoard.Ships = new Ship[] {
-            new Ship(new List<int>(){03, 04, 05}),
-            new Ship(new List<int>(){33, 43, 53}),
-            new Ship(new List<int>(){67, 68})
-            };
-            ;// später ui schiffe platzieren
-            playerBoard.SSOOG();
+            // UI Schiffe platzieren
+            Fields = new Rectangle[boardLength, boardLength];
+            Grid uiGrid = new Grid();
+            for (int i = 0; i < boardLength; i++)
+            {
+                uiGrid.ColumnDefinitions.Add(new ColumnDefinition());
+                uiGrid.RowDefinitions.Add(new RowDefinition());
+                for (int j = 0; j < boardLength; j++)
+                {
+                    Rectangle rec = new Rectangle();
+                    Grid.SetRow(rec, i);
+                    Grid.SetColumn(rec, j);
+                    rec.Fill = new ImageBrush(new BitmapImage(new Uri(@"..\..\Images\Water.png", UriKind.Relative)));
+                    rec.AddHandler(UIElement.MouseDownEvent, new RoutedEventHandler(Click));
+                    Fields[i, j] = rec;
+                    uiGrid.Children.Add(Fields[i, j]);
+                }
+            }
+            //
+            uiGrid.Width = uiGrid.Height = GridLength;
+            MyGrid.Children.Add(uiGrid);
+
+            //Player
+            //playerBoard.SSOOG();
             //Computer
             Board computerBoard = new Board();
             computerBoard.Ships = Board.GenerateShips();
@@ -45,36 +65,23 @@ namespace Battleship
 
             computer.Title = "Computer";
             player.Title = "Player";
-            
-
-
-            computer.Show();
-            player.Show();
-            /* Error
-            string s = "";
-            List<int> nums = new List<int>();
-            foreach(Ship ship in board.Ships)
-            {
-                s += ship.IsHorizontal ? "Horizontal: " : "Vertical: ";
-                foreach(int coor in ship.Coordinates)
-                {
-                    s += coor.ToString() + " ";
-                    nums.Add(coor);
-                }
-                s += "\n";
-            }
-            nums.Sort();
-            s += "\n \n \n";
-            int b = nums[0];
-            for(int i=1; i<nums.Count; i++)
-            {
-                if (nums[i] == b) MessageBox.Show(b.ToString(), "ERROR");
-                b = nums[i];
-                s += nums[i].ToString() + " ";
-            }
-            Ausgabe.Text = s;
-            */
+           
         }
-        
+        public void Click(object sender, RoutedEventArgs e)
+        {
+            Rectangle rec = (Rectangle)sender;
+            int x = 0;
+            int y = 0;
+            // Searching for clicked rectangle in array, to get coordinates
+            for (int i = 0; i < boardLength; i++)
+                for (int j = 0; j < boardLength; j++)
+                    if (Fields[i, j] == rec)
+                    {
+                        MessageBox.Show(string.Format("{0}, {1}", i, j)); // Show coordinate for debug purposes
+                        x = i;
+                        y = j;
+                        break;
+                    }
+        }
     }
 }

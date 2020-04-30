@@ -6,9 +6,8 @@
         xmlns:local="clr-namespace:Battleship"
         mc:Ignorable="d"
         Title="MainWindow" Height="700" Width="1200">
-    <!--
+
     <Canvas Name="MyGrid">
         <TextBlock Name="Ausgabe" Width="379" Canvas.Left="815" Height="700"/>
     </Canvas>
-    -->
 </Window>
