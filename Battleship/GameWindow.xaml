@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:Battleship"
         mc:Ignorable="d"
         Title="GameWindow" Height="1080" Width="1920">
-    <StackPanel Name="StackPan" Orientation="Horizontal">
-    </StackPanel>
+    <DockPanel Name="DockPan">
+        <Label Name="LblShip">SHIPS: </Label>
+    </DockPanel>
 </Window>

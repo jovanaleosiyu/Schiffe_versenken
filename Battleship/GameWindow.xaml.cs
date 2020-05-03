@@ -22,27 +22,41 @@ namespace Battleship
         const int GridLength = 500; //800
         public Board EnemyBoard { get; set; }
         public Board OwnBoard { get; set; }
+        int shipsleft;
         public GameWindow(Board enemyBoard, Board ownBoard)
         {
             InitializeComponent();
+            shipsleft = enemyBoard.Ships.Length+1;
             EnemyBoard = enemyBoard;
             OwnBoard = ownBoard;
             //EnemyBoard
             EnemyBoard.BoardGrid.Width = GridLength;
             EnemyBoard.BoardGrid.Height = GridLength;
             EnemyBoard.BoardGrid.Margin = new Thickness(5);
-            StackPan.Children.Add(EnemyBoard.BoardGrid);
+            DockPan.Children.Add(EnemyBoard.BoardGrid);
+            DockPanel.SetDock(EnemyBoard.BoardGrid, Dock.Left);
             //OwnBoard
             OwnBoard.OpenBoardGrid.Width = GridLength;
             OwnBoard.OpenBoardGrid.Height = GridLength;
             OwnBoard.OpenBoardGrid.Margin = new Thickness(5);
-            StackPan.Children.Add(OwnBoard.OpenBoardGrid);
+            DockPan.Children.Add(OwnBoard.OpenBoardGrid);
+            DockPanel.SetDock(OwnBoard.OpenBoardGrid, Dock.Left);
+            UpdateLabels();
         }
         public void ComputerTurn()
         {
             //Hier kommt dann die KI hinein
             Random rand = new Random();
             while(!OwnBoard.Hit(rand.Next(9), rand.Next(9)));
+        }
+        public void UpdateLabels()
+        {
+            LblShip.Content = string.Format("SHIPS: {0}", --shipsleft);
+            if(shipsleft <= 0)
+            {
+                MessageBox.Show("VICTORY");
+                Application.Current.Shutdown();
+            }
         }
     }
 }

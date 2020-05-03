@@ -202,8 +202,8 @@ namespace Battleship
                 player = new GameWindow(computerBoard, playerBoard);
                 computer.Title = "Computer";
                 player.Title = "Player";
-                player.Show();
                 computer.Show();
+                player.Show();
             }
         }
         private void Keydown(object sender, KeyEventArgs e)
@@ -217,5 +217,6 @@ namespace Battleship
                 turn();
             }
         }
+        
     }
 }

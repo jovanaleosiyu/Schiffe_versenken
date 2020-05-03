@@ -108,7 +108,11 @@ namespace Battleship
                         ship.Coordinates.Remove(coordinate);
                         Fields[x, y].Fill = new ImageBrush(new BitmapImage(new Uri(@"..\..\Images\ShipHit.png", UriKind.Relative)));
                         OpenBoardFields[x, y].Fill = new ImageBrush(new BitmapImage(new Uri(@"..\..\Images\ShipHit.png", UriKind.Relative)));
-                        if (ship.Coordinates.Count == 0) MessageBox.Show("BOOM!!");
+                        if (ship.Coordinates.Count == 0) {
+                            MessageBox.Show("Ship destroyed","BOOM!!");
+                            GameWindow player = (GameWindow)Window.GetWindow(BoardGrid);
+                            player.UpdateLabels();
+                        }
                         break;
                     }
             // if not hit
