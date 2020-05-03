@@ -156,8 +156,15 @@ namespace Battleship
 
 
         }
-
         private void BtnTurn_Click(object sender, RoutedEventArgs e)
+        {
+            turn();
+        }
+        private void BtnPlace_Click(object sender, RoutedEventArgs e)
+        {
+            place();   
+        }
+        private void turn()
         {
             isHori = !isHori;
             if (deleteShip != null)
@@ -169,8 +176,7 @@ namespace Battleship
                 deleteShip = null;
             }
         }
-
-        private void BtnPlace_Click(object sender, RoutedEventArgs e)
+        private void place()
         {
             if (deleteShip == null) return;
             foreach (int coor in deleteShip.Coordinates)
@@ -200,6 +206,16 @@ namespace Battleship
                 computer.Show();
             }
         }
-
+        private void Keydown(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Space || e.Key == Key.P)
+            {
+                place();
+            }
+            else if(e.Key == Key.T)
+            {
+                turn();
+            }
+        }
     }
 }

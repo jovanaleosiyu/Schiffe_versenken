@@ -17,6 +17,8 @@ namespace Battleship
         const int boardLength = 9; // 9x9 Fields
         static int[] lengthOfShips = { 5, 4, 3, 3, 2, 2 }; // Length of every ship
         // Ships: 1x5; 1x4; 2x3; 2x2
+        // Images
+        ImageBrush waterhit = new ImageBrush(new BitmapImage(new Uri(@"..\..\Images\WaterHit.png", UriKind.Relative)));
         // Properties
         public Ship[] Ships { get; set; }
         public List<int> HitShips { get; set; }
@@ -78,8 +80,23 @@ namespace Battleship
                         y = j;
                         break;
                     }
+            if(Hit(x, y)) // player hits
+            {
+                //Ki
+                Random rand = new Random();
+                MessageBox.Show("computer's turn");
+                GameWindow player =  (GameWindow)Window.GetWindow(rec);
+                player.ComputerTurn();
+            }
+            
+        }
+        /// <summary>
+        /// Returns an array of ships with random coordinates (that dont collide)
+        /// </summary>
+        public bool Hit(int x, int y)
+        {
             // Already hit
-            if (HitShips.Contains(x * 10 + y)) return;
+            if (HitShips.Contains(x * 10 + y)) return false;
             // Check every ship to match the clicked coordinate
             bool hit = false;
             foreach (Ship ship in Ships)
@@ -89,7 +106,7 @@ namespace Battleship
                         hit = true;
                         HitShips.Add(coordinate);
                         ship.Coordinates.Remove(coordinate);
-                        rec.Fill = new ImageBrush(new BitmapImage(new Uri(@"..\..\Images\ShipHit.png", UriKind.Relative)));
+                        Fields[x, y].Fill = new ImageBrush(new BitmapImage(new Uri(@"..\..\Images\ShipHit.png", UriKind.Relative)));
                         OpenBoardFields[x, y].Fill = new ImageBrush(new BitmapImage(new Uri(@"..\..\Images\ShipHit.png", UriKind.Relative)));
                         if (ship.Coordinates.Count == 0) MessageBox.Show("BOOM!!");
                         break;
@@ -97,13 +114,14 @@ namespace Battleship
             // if not hit
             if (!hit)
             {
-                rec.Fill = new ImageBrush(new BitmapImage(new Uri(@"..\..\Images\WaterHit.png", UriKind.Relative)));
-                OpenBoardFields[x, y].Fill = new ImageBrush(new BitmapImage(new Uri(@"..\..\Images\WaterHit.png", UriKind.Relative)));
+                if (Fields[x, y].Fill == waterhit)
+                    return false;
+                Fields[x, y].Fill = waterhit;
+                OpenBoardFields[x, y].Fill = waterhit;
+                return true;
             }
+            return true;
         }
-        /// <summary>
-        /// Returns an array of ships with random coordinates (that dont collide)
-        /// </summary>
         public static Ship[] GenerateShips()
         {
             Random random = new Random();

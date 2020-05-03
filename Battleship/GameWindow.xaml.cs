@@ -38,5 +38,11 @@ namespace Battleship
             OwnBoard.OpenBoardGrid.Margin = new Thickness(5);
             StackPan.Children.Add(OwnBoard.OpenBoardGrid);
         }
+        public void ComputerTurn()
+        {
+            //Hier kommt dann die KI hinein
+            Random rand = new Random();
+            while(!OwnBoard.Hit(rand.Next(9), rand.Next(9)));
+        }
     }
 }

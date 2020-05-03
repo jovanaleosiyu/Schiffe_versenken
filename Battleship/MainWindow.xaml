@@ -5,10 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Battleship"
         mc:Ignorable="d"
-        Title="MainWindow" Height="700" Width="1200">
+        Title="MainWindow" Height="700" Width="1200" KeyDown="Keydown">
 
     <Canvas Name="MyGrid">
-        <Button Name="BtnTurn" Content="Turn" Width="76" Canvas.Left="794" Canvas.Top="82" Click="BtnTurn_Click"/>
-        <Button Name="BtnPlace" Content="Place" Width="76" Canvas.Left="794" Canvas.Top="123" Click="BtnPlace_Click"/>
+        <Button Name="BtnTurn" Content="TURN (T)" Width="144" Canvas.Left="638" Canvas.Top="128" Click="BtnTurn_Click"/>
+        <Button Name="BtnPlace" Content="PLACE (SPACE | P)" Width="144" Canvas.Left="638" Canvas.Top="170" Click="BtnPlace_Click"/>
     </Canvas>
 </Window>
