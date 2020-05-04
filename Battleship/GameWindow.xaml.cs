@@ -19,7 +19,8 @@ namespace Battleship
     /// </summary>
     public partial class GameWindow : Window
     {
-        const int GridLength = 700; //800
+        int innerMargin = 100;
+        const int GridLength = 550;
         public Board EnemyBoard { get; set; }
         public Board OwnBoard { get; set; }
         int shipsleft;
@@ -32,15 +33,14 @@ namespace Battleship
             //EnemyBoard
             EnemyBoard.BoardGrid.Width = GridLength;
             EnemyBoard.BoardGrid.Height = GridLength;
-            EnemyBoard.BoardGrid.Margin = new Thickness(5);
+            EnemyBoard.BoardGrid.Margin = new Thickness(0, 0, innerMargin, 0);
             MyGrid.Children.Add(EnemyBoard.BoardGrid);
-            DockPanel.SetDock(EnemyBoard.BoardGrid, Dock.Left);
             //OwnBoard
             OwnBoard.OpenBoardGrid.Width = GridLength;
             OwnBoard.OpenBoardGrid.Height = GridLength;
-            OwnBoard.OpenBoardGrid.Margin = new Thickness(5);
+            OwnBoard.OpenBoardGrid.Margin = new Thickness(innerMargin, 0, 0, 0);
             MyGrid.Children.Add(OwnBoard.OpenBoardGrid);
-            DockPanel.SetDock(OwnBoard.OpenBoardGrid, Dock.Left);
+            Grid.SetColumn(OwnBoard.OpenBoardGrid, 1);
             UpdateLabels();
         }
         public void ComputerTurn()

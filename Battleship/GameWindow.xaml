@@ -9,6 +9,18 @@
         WindowState="Maximized"
         ResizeMode="NoResize">
     <Grid Name="MyGrid">
-        <Label Name="LblShip">SHIPS: </Label>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Label VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.ColumnSpan="2" FontSize="80" FontFamily="Candara Light">BATTLESHIP</Label>
+        <Grid VerticalAlignment="Center" Width="300" HorizontalAlignment="Center" Grid.ColumnSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Label HorizontalAlignment="Center" Name="LblTimer" FontSize="80" FontFamily="Candara Light" >00:00</Label>
+            <Label HorizontalAlignment="Center" Grid.Row="1" Name="LblShip" FontSize="60" FontFamily="Candara Light" >SHIPS: X</Label>
+        </Grid>
     </Grid>
 </Window>
