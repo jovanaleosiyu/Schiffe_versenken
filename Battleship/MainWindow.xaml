@@ -6,10 +6,23 @@
         xmlns:local="clr-namespace:Battleship"
         mc:Ignorable="d"
         Title="MainWindow" Height="1080" Width="1920" KeyDown="Keydown"
-        WindowState="Maximized">
+        WindowState="Maximized"
+        ResizeMode="NoResize">
 
-    <Canvas Name="MyGrid">
-        <Button Name="BtnTurn" Content="TURN (T)" Width="387" Canvas.Left="1121" Canvas.Top="143" Click="BtnTurn_Click" Height="69"/>
-        <Button Name="BtnPlace" Content="PLACE (SPACE | P)" Width="387" Canvas.Left="1121" Canvas.Top="324" Click="BtnPlace_Click" Height="69"/>
-    </Canvas>
+    <Grid HorizontalAlignment="Center">
+        <Grid Width="600" Name="MyGrid">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="6*"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Label HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.ColumnSpan="2" FontSize="80" FontFamily="Candara Light">BATTLESHIP</Label>
+            <Button Grid.Row="2"  Name="BtnTurn" Content="TURN (T)"  Click="BtnTurn_Click" Height="69" FontFamily="Candara Light" FontSize="36"/>
+            <Button Grid.Row="2" Grid.Column="1" Name="BtnPlace" Content="PLACE (SPACE | P)" Click="BtnPlace_Click" Height="69" FontSize="36" FontFamily="Candara Light"/>
+        </Grid>
+    </Grid>
 </Window>

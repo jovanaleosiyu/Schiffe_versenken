@@ -33,13 +33,13 @@ namespace Battleship
             EnemyBoard.BoardGrid.Width = GridLength;
             EnemyBoard.BoardGrid.Height = GridLength;
             EnemyBoard.BoardGrid.Margin = new Thickness(5);
-            DockPan.Children.Add(EnemyBoard.BoardGrid);
+            MyGrid.Children.Add(EnemyBoard.BoardGrid);
             DockPanel.SetDock(EnemyBoard.BoardGrid, Dock.Left);
             //OwnBoard
             OwnBoard.OpenBoardGrid.Width = GridLength;
             OwnBoard.OpenBoardGrid.Height = GridLength;
             OwnBoard.OpenBoardGrid.Margin = new Thickness(5);
-            DockPan.Children.Add(OwnBoard.OpenBoardGrid);
+            MyGrid.Children.Add(OwnBoard.OpenBoardGrid);
             DockPanel.SetDock(OwnBoard.OpenBoardGrid, Dock.Left);
             UpdateLabels();
         }

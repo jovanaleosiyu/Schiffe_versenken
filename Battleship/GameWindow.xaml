@@ -6,8 +6,9 @@
         xmlns:local="clr-namespace:Battleship"
         mc:Ignorable="d"
         Title="GameWindow" Height="1080" Width="1920"
-        WindowState="Maximized">
-    <DockPanel Name="DockPan">
+        WindowState="Maximized"
+        ResizeMode="NoResize">
+    <Grid Name="MyGrid">
         <Label Name="LblShip">SHIPS: </Label>
-    </DockPanel>
+    </Grid>
 </Window>

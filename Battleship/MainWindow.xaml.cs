@@ -32,7 +32,7 @@ namespace Battleship
         // Variablen für ui
         List<Ship> allreadySetShips;
         const int boardLength = 9; // 9x9 Fields
-        const int GridLength = 800; // 800
+        const int GridLength = 600; // 800
         Rectangle[,] Fields;
         List<int> lengthOfShips = new List<int>() { 5, 4, 3, 3, 2, 2 }; // Length of every ship
         bool isHori = true;
@@ -61,6 +61,8 @@ namespace Battleship
                 }
             }
             uiGrid.Width = uiGrid.Height = GridLength;
+            Grid.SetRow(uiGrid,1);
+            Grid.SetColumnSpan(uiGrid, 2);
             MyGrid.Children.Add(uiGrid);
         }
         public void Click(object sender, RoutedEventArgs e)
