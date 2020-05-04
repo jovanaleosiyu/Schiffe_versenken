@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Battleship"
         mc:Ignorable="d"
-        Title="GameWindow" Height="1080" Width="1920">
+        Title="GameWindow" Height="1080" Width="1920"
+        WindowState="Maximized">
     <DockPanel Name="DockPan">
         <Label Name="LblShip">SHIPS: </Label>
     </DockPanel>

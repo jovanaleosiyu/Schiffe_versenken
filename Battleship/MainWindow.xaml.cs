@@ -22,10 +22,17 @@ namespace Battleship
     {
         GameWindow player;
         GameWindow computer;
+        // const
+        Thickness margin = new Thickness(2);
+        // Images
+        ImageBrush notsetship_verti = new ImageBrush(new BitmapImage(new Uri(@"..\..\Images\notsetship_verti.png", UriKind.Relative)));
+        ImageBrush notsetship_hori = new ImageBrush(new BitmapImage(new Uri(@"..\..\Images\notsetship_hori.png", UriKind.Relative)));
+        ImageBrush ship_hori = new ImageBrush(new BitmapImage(new Uri(@"..\..\Images\ship_hori.png", UriKind.Relative)));
+        ImageBrush ship_verti = new ImageBrush(new BitmapImage(new Uri(@"..\..\Images\ship_verti.png", UriKind.Relative)));
         // Variablen für ui
         List<Ship> allreadySetShips;
         const int boardLength = 9; // 9x9 Fields
-        const int GridLength = 500; // 800
+        const int GridLength = 800; // 800
         Rectangle[,] Fields;
         List<int> lengthOfShips = new List<int>() { 5, 4, 3, 3, 2, 2 }; // Length of every ship
         bool isHori = true;
@@ -46,6 +53,7 @@ namespace Battleship
                     Rectangle rec = new Rectangle();
                     Grid.SetRow(rec, i);
                     Grid.SetColumn(rec, j);
+                    rec.Margin = margin;
                     rec.Fill = new ImageBrush(new BitmapImage(new Uri(@"..\..\Images\Water.png", UriKind.Relative)));
                     rec.AddHandler(UIElement.MouseDownEvent, new RoutedEventHandler(Click));
                     Fields[i, j] = rec;
@@ -128,7 +136,7 @@ namespace Battleship
             {
                 foreach (int coor in deleteShip.Coordinates)
                 {
-                    Fields[coor / 10, coor % 10].Fill = new ImageBrush(new BitmapImage(new Uri(@"..\..\Images\Water.png", UriKind.Relative)));
+                    Fields[coor / 10, coor % 10].Fill = new ImageBrush(new BitmapImage(new Uri(@"..\..\Images\water.png", UriKind.Relative)));
                 }
                 deleteShip = null;
             }
@@ -140,7 +148,7 @@ namespace Battleship
                 for (int j = 0; j < lengthOfShips[0]; j++)
                 {
                     shipCoordinate.Add(x * 10 + y + j);
-                    Fields[x, y + j].Fill = new ImageBrush(new BitmapImage(new Uri(@"..\..\Images\NotSetShip.png", UriKind.Relative)));
+                    Fields[x, y + j].Fill = notsetship_hori;
                 }
             }
             else
@@ -149,7 +157,7 @@ namespace Battleship
                 for (int j = 0; j < lengthOfShips[0]; j++)
                 {
                     shipCoordinate.Add(xy + j * 10);
-                    Fields[x + j, y].Fill = new ImageBrush(new BitmapImage(new Uri(@"..\..\Images\NotSetShip.png", UriKind.Relative)));
+                    Fields[x + j, y].Fill = notsetship_verti;
                 }
             }
             deleteShip = new Ship(shipCoordinate);
@@ -171,7 +179,7 @@ namespace Battleship
             {
                 foreach (int coor in deleteShip.Coordinates)
                 {
-                    Fields[coor / 10, coor % 10].Fill = new ImageBrush(new BitmapImage(new Uri(@"..\..\Images\Water.png", UriKind.Relative)));
+                    Fields[coor / 10, coor % 10].Fill = new ImageBrush(new BitmapImage(new Uri(@"..\..\Images\water.png", UriKind.Relative)));
                 }
                 deleteShip = null;
             }
@@ -181,7 +189,10 @@ namespace Battleship
             if (deleteShip == null) return;
             foreach (int coor in deleteShip.Coordinates)
             {
-                Fields[coor / 10, coor % 10].Fill = new ImageBrush(new BitmapImage(new Uri(@"..\..\Images\Ship.png", UriKind.Relative)));
+                ImageBrush img;
+                if (deleteShip.IsHorizontal) img = ship_hori;
+                else img = ship_verti;
+                Fields[coor / 10, coor % 10].Fill = img;
             }
             allreadySetShips.Add(deleteShip);
             deleteShip = null;

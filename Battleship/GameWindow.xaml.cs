@@ -19,7 +19,7 @@ namespace Battleship
     /// </summary>
     public partial class GameWindow : Window
     {
-        const int GridLength = 500; //800
+        const int GridLength = 700; //800
         public Board EnemyBoard { get; set; }
         public Board OwnBoard { get; set; }
         int shipsleft;

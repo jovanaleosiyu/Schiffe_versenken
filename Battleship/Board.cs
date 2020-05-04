@@ -16,9 +16,15 @@ namespace Battleship
         // Constants
         const int boardLength = 9; // 9x9 Fields
         static int[] lengthOfShips = { 5, 4, 3, 3, 2, 2 }; // Length of every ship
+        Thickness margin = new Thickness(2);
         // Ships: 1x5; 1x4; 2x3; 2x2
         // Images
-        ImageBrush waterhit = new ImageBrush(new BitmapImage(new Uri(@"..\..\Images\WaterHit.png", UriKind.Relative)));
+        ImageBrush waterhit = new ImageBrush(new BitmapImage(new Uri(@"..\..\Images\water_hit.png", UriKind.Relative)));
+        ImageBrush water = new ImageBrush(new BitmapImage(new Uri(@"..\..\Images\water.png", UriKind.Relative)));
+        ImageBrush shiphit_hori = new ImageBrush(new BitmapImage(new Uri(@"..\..\Images\ship_hit_hori.png", UriKind.Relative)));
+        ImageBrush ship_hori = new ImageBrush(new BitmapImage(new Uri(@"..\..\Images\ship_hori.png", UriKind.Relative)));
+        ImageBrush shiphit_verti = new ImageBrush(new BitmapImage(new Uri(@"..\..\Images\ship_hit_verti.png", UriKind.Relative)));
+        ImageBrush ship_verti = new ImageBrush(new BitmapImage(new Uri(@"..\..\Images\ship_verti.png", UriKind.Relative)));
         // Properties
         public Ship[] Ships { get; set; }
         public List<int> HitShips { get; set; }
@@ -48,12 +54,14 @@ namespace Battleship
                 {
                     Rectangle rec = new Rectangle();
                     Rectangle ofrec = new Rectangle();
+                    rec.Margin = margin;
+                    ofrec.Margin = margin;
                     Grid.SetRow(rec, i);
                     Grid.SetColumn(rec, j);
                     Grid.SetRow(ofrec, i);
                     Grid.SetColumn(ofrec, j);
-                    rec.Fill = new ImageBrush(new BitmapImage(new Uri(@"..\..\Images\Water.png", UriKind.Relative)));
-                    ofrec.Fill = new ImageBrush(new BitmapImage(new Uri(@"..\..\Images\Water.png", UriKind.Relative)));
+                    rec.Fill = water;
+                    ofrec.Fill = water;
                     OpenBoardFields[i, j] = ofrec;
                     OpenBoardGrid.Children.Add(OpenBoardFields[i, j]);
                     rec.AddHandler(UIElement.MouseDownEvent, new RoutedEventHandler(Click));
@@ -106,8 +114,11 @@ namespace Battleship
                         hit = true;
                         HitShips.Add(coordinate);
                         ship.Coordinates.Remove(coordinate);
-                        Fields[x, y].Fill = new ImageBrush(new BitmapImage(new Uri(@"..\..\Images\ShipHit.png", UriKind.Relative)));
-                        OpenBoardFields[x, y].Fill = new ImageBrush(new BitmapImage(new Uri(@"..\..\Images\ShipHit.png", UriKind.Relative)));
+                        ImageBrush img;
+                        if (ship.IsHorizontal) img = shiphit_hori;
+                        else img = shiphit_verti;
+                        Fields[x, y].Fill = img;
+                        OpenBoardFields[x, y].Fill = img;
                         if (ship.Coordinates.Count == 0) {
                             MessageBox.Show("Ship destroyed","BOOM!!");
                             GameWindow player = (GameWindow)Window.GetWindow(BoardGrid);
@@ -218,7 +229,8 @@ namespace Battleship
             {
                 foreach(int coor in ship.Coordinates)
                 {
-                    OpenBoardFields[coor / 10, coor % 10].Fill = new ImageBrush(new BitmapImage(new Uri(@"..\..\Images\Ship.png", UriKind.Relative)));
+                    if(ship.IsHorizontal) OpenBoardFields[coor / 10, coor % 10].Fill = ship_hori;
+                    else OpenBoardFields[coor / 10, coor % 10].Fill = ship_verti;
                 }    
             }
         }
