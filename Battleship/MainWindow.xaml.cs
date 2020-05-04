@@ -213,8 +213,8 @@ namespace Battleship
                 // Window Configuration
                 computer = new GameWindow(playerBoard, computerBoard);
                 player = new GameWindow(computerBoard, playerBoard);
-                computer.Title = "Computer";
-                player.Title = "Player";
+                computer.Title = "BATTLESHIP | Computer";
+                player.Title = "BATTLESHIP | Player";
                 computer.Show();
                 player.Show();
             }

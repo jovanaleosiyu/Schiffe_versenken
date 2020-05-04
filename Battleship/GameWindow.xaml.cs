@@ -75,7 +75,6 @@ namespace Battleship
             {
                 timer.Stop();
                 MessageBox.Show(Title + " won!","VICTORY");
-                GameWindow enemy = (GameWindow)Window.GetWindow(EnemyBoard.BoardGrid);
                 enemy.LostMessage();
             }
         }
