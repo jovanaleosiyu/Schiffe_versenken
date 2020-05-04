@@ -19,8 +19,8 @@
                 <RowDefinition/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <Label HorizontalAlignment="Center" Name="LblTimer" FontSize="80" FontFamily="Candara Light" >00:00</Label>
-            <Label HorizontalAlignment="Center" Grid.Row="1" Name="LblShip" FontSize="60" FontFamily="Candara Light" >SHIPS: X</Label>
+            <Label HorizontalAlignment="Center" Name="LblTimer" FontSize="80" FontFamily="Calibri Light" >00:00</Label>
+            <Label HorizontalAlignment="Center" Grid.Row="1" Name="LblShip" FontSize="60" FontFamily="Calibri Light" >SHIPS: X</Label>
         </Grid>
     </Grid>
 </Window>

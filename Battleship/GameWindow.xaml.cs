@@ -11,7 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-
+using System.Windows.Threading;
 namespace Battleship
 {
     /// <summary>
@@ -21,15 +21,22 @@ namespace Battleship
     {
         int innerMargin = 100;
         const int GridLength = 550;
+        int time = 0;
         public Board EnemyBoard { get; set; }
         public Board OwnBoard { get; set; }
         int shipsleft;
         public GameWindow(Board enemyBoard, Board ownBoard)
         {
+            //initializing
             InitializeComponent();
             shipsleft = enemyBoard.Ships.Length+1;
             EnemyBoard = enemyBoard;
             OwnBoard = ownBoard;
+            //Timer
+            DispatcherTimer timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(1);
+            timer.Tick += timer_Tick;
+            timer.Start();
             //EnemyBoard
             EnemyBoard.BoardGrid.Width = GridLength;
             EnemyBoard.BoardGrid.Height = GridLength;
@@ -42,6 +49,15 @@ namespace Battleship
             MyGrid.Children.Add(OwnBoard.OpenBoardGrid);
             Grid.SetColumn(OwnBoard.OpenBoardGrid, 1);
             UpdateLabels();
+        }
+        void timer_Tick(object sender, EventArgs e)
+        {
+            time++;
+            string min = (time / 60).ToString();
+            string sec = (time % 60).ToString();
+            if (min.Length < 2) min = "0" + min;
+            if (sec.Length < 2) sec = "0" + sec;
+            LblTimer.Content = min + ":" + sec;
         }
         public void ComputerTurn()
         {
