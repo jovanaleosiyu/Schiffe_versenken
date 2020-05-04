@@ -19,9 +19,12 @@ namespace Battleship
     /// </summary>
     public partial class GameWindow : Window
     {
+        //const
         int innerMargin = 100;
         const int GridLength = 550;
-        int time = 0;
+        //time
+        int time = 0; 
+        DispatcherTimer timer;
         public Board EnemyBoard { get; set; }
         public Board OwnBoard { get; set; }
         int shipsleft;
@@ -33,7 +36,7 @@ namespace Battleship
             EnemyBoard = enemyBoard;
             OwnBoard = ownBoard;
             //Timer
-            DispatcherTimer timer = new DispatcherTimer();
+            timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += timer_Tick;
             timer.Start();
@@ -70,9 +73,15 @@ namespace Battleship
             LblShip.Content = string.Format("SHIPS: {0}", --shipsleft);
             if(shipsleft <= 0)
             {
-                MessageBox.Show("VICTORY");
-                Application.Current.Shutdown();
+                timer.Stop();
+                MessageBox.Show(Title + " won!","VICTORY");
+                GameWindow enemy = (GameWindow)Window.GetWindow(EnemyBoard.BoardGrid);
+                enemy.LostMessage();
             }
+        }
+        public void LostMessage()
+        {
+            MessageBox.Show(Title + "lost!", "DEFEAT");
         }
     }
 }
