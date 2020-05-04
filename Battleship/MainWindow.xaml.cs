@@ -211,10 +211,12 @@ namespace Battleship
                 computerBoard.Ships = Board.GenerateShips();
                 computerBoard.SSOOG();
                 // Window Configuration
-                computer = new GameWindow(playerBoard, computerBoard);
-                player = new GameWindow(computerBoard, playerBoard);
+                computer = new GameWindow(playerBoard, computerBoard, "computer");
+                player = new GameWindow(computerBoard, playerBoard, "player");
                 computer.Title = "BATTLESHIP | Computer";
                 player.Title = "BATTLESHIP | Player";
+                computer.Enemy = player;
+                player.Enemy = computer;
                 computer.Show();
                 player.Show();
             }

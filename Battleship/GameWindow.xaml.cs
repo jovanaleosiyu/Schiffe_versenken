@@ -23,16 +23,20 @@ namespace Battleship
         int innerMargin = 100;
         const int GridLength = 550;
         //time
-        int time = 0; 
+        int time = 0;
         DispatcherTimer timer;
+        //
+        public GameWindow Enemy { get; set; }
+        string name;
         public Board EnemyBoard { get; set; }
         public Board OwnBoard { get; set; }
         int shipsleft;
-        public GameWindow(Board enemyBoard, Board ownBoard)
+        public GameWindow(Board enemyBoard, Board ownBoard, string name)
         {
             //initializing
+            this.name = name;
             InitializeComponent();
-            shipsleft = enemyBoard.Ships.Length+1;
+            shipsleft = enemyBoard.Ships.Length + 1;
             EnemyBoard = enemyBoard;
             OwnBoard = ownBoard;
             //Timer
@@ -66,21 +70,30 @@ namespace Battleship
         {
             //Hier kommt dann die KI hinein
             Random rand = new Random();
-            while(!OwnBoard.Hit(rand.Next(9), rand.Next(9)));
+            while (!OwnBoard.Hit(rand.Next(9), rand.Next(9))) ;
         }
         public void UpdateLabels()
         {
             LblShip.Content = string.Format("SHIPS: {0}", --shipsleft);
-            if(shipsleft <= 0)
+            if (shipsleft <= 0)
             {
                 timer.Stop();
-                MessageBox.Show(Title + " won!","VICTORY");
-                enemy.LostMessage();
+                Enemy.StopTime();
+                if (name != "player") Enemy.LostMessage();
+                MessageBox.Show("You won :)", "VICTORY", MessageBoxButton.OK);
+                System.Windows.Application.Current.Shutdown();
+
+
             }
         }
         public void LostMessage()
         {
-            MessageBox.Show(Title + "lost!", "DEFEAT");
+            MessageBox.Show("You lost :(", "DEFEAT", MessageBoxButton.OK);
+            System.Windows.Application.Current.Shutdown();
+        }
+        public void StopTime()
+        {
+            timer.Stop();
         }
     }
 }
