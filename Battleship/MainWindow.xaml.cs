@@ -96,14 +96,14 @@ namespace Battleship
                     // Collision with horizontal ships
                     if (ship.IsHorizontal && (x > ship.Coordinates[0] - lengthOfShips[0]) && ((ship.Coordinates[ship.Coordinates.Count - 1] + 1 + lengthOfShips[0]) % 10 > boardLength))
                     {
-                        MessageBox.Show("Du kannst das Schiff nicht hierhersetzen", "Das geht sich nicht aus, Meier");
+                        MessageBox.Show("You can't place it here.", "Not enough Place");
                         return;
                     }
                     // Collision with vertical ships
                     foreach (int coor in ship.Coordinates)
                         if (xy > coor - lengthOfShips[0] && xy <= coor)
                         {
-                            MessageBox.Show("Du kannst das Schiff nicht hierhersetzen", "Das geht sich nicht aus, Meier");
+                            MessageBox.Show("You can't place it here.", "Not enough Place");
                             return;
                         }
                 }
@@ -112,7 +112,7 @@ namespace Battleship
             {
                 if (xy + lengthOfShips[0] * 10 > boardLength * 10 + xy % 10) // ship coordinate cant collide with board-end
                 {
-                    MessageBox.Show("Du kannst das Schiff nicht hierhersetzen", "Das geht sich nicht aus, Meier");
+                    MessageBox.Show("You can't place it here.", "Not enough Place");
                     return;
                 }
                 foreach (Ship ship in allreadySetShips) // Loops through already placed ships
@@ -120,14 +120,14 @@ namespace Battleship
                     // Collision with vertical ships
                     if ((xy % 10 == ship.Coordinates[0] % 10) && (xy/10 + lengthOfShips[0] > ship.Coordinates[0] / 10) && (xy / 10 <= ship.Coordinates[ship.Coordinates.Count - 1]/10))
                     {
-                        MessageBox.Show("Du kannst das Schiff nicht hierhersetzen", "Das geht sich nicht aus, Meier");
+                        MessageBox.Show("You can't place it here.", "Not enough Place");
                         return;
                     }
                     // Collision with horizontal ships
                     foreach (int coor in ship.Coordinates)
                         if ((xy % 10 == coor % 10) && (xy / 10 > coor / 10 - lengthOfShips[0]) && xy / 10 < coor / 10)
                         {
-                            MessageBox.Show("Du kannst das Schiff nicht hierhersetzen", "Das geht sich nicht aus, Meier");
+                            MessageBox.Show("You can't place it here.", "Not enough Place");
                             return;
                         }
                 }

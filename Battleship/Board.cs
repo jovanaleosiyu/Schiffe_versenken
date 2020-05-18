@@ -90,10 +90,9 @@ namespace Battleship
                     }
             if(Hit(x, y)) // player hits
             {
-                //Ki
-                MessageBox.Show("computer's turn");
+                //MessageBox.Show("computer's turn");
                 GameWindow player =  (GameWindow)Window.GetWindow(rec);
-                player.ComputerTurn();
+                player.ComputerTurn(); // AI
             }
             
         }

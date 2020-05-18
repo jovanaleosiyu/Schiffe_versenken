@@ -53,7 +53,10 @@ namespace Battleship
             shipsleft = enemyBoard.Ships.Length + 1;
             EnemyBoard = enemyBoard;
             OwnBoard = ownBoard;
-            playerShips = new List<Ship>(ownBoard.Ships);
+            // Ships for ai
+            playerShips = new List<Ship>();
+            foreach(Ship ship in ownBoard.Ships) 
+                playerShips.Add(new Ship(new List<int>(ship.Coordinates)));
             //Get diagonal lines for ai
             int y = 1;
             for (int i = 0; i < diagonalCoor.Length; i++)
@@ -101,7 +104,7 @@ namespace Battleship
             LblTimer.Content = min + ":" + sec;
         }
         public void ComputerTurn()
-         {
+        {
             Random rand = new Random();
             if (hunt)
             {
@@ -136,9 +139,8 @@ namespace Battleship
                     if (currentShip.Coordinates.Contains(directions[direction]))
                     {
                         hitCoor.Add(directions[direction]);
-                        if (currentShip.Coordinates.Count == hitCoor.Count)
+                         if (currentShip.Coordinates.Count == hitCoor.Count)
                         {
-                            MessageBox.Show("versunken");
                             shipCheckList.Remove(hitCoor.Count);
                             hitCoor.Clear();
                             direction = 0;
@@ -146,6 +148,10 @@ namespace Battleship
                             {
                                 hitCoor.Add(huntStart[0]);
                                 huntStart.RemoveAt(0);
+                                foreach(Ship ship in playerShips)
+                                {
+                                    if (ship.Coordinates.Contains(hitCoor[0])) currentShip = ship;
+                                }
                             }
                             else hunt = false;
                         }
@@ -178,19 +184,6 @@ namespace Battleship
                 while (((i = rand.Next(1, 8)) % 2 == 0) ||
                 (everyHit.Contains(xy = diagonalCoor[i][rand.Next(diagonalCoor[i].Count)]))) ;
                 everyHit.Add(xy);
-                foreach (Ship ship in playerShips)
-                {
-                    if (ship.Coordinates.Contains(xy))
-                    {
-                        MessageBox.Show("Hit SHIP");
-                        hitCoor.Add(xy);
-                        hunt = true;
-                        currentShip = new Ship(new List<int>(ship.Coordinates));
-                        break;
-                    }
-                }
-                MessageBox.Show(xy.ToString());
-                OwnBoard.Hit(xy / 10, xy % 10);
             }
             // every diagonal
             else
@@ -202,13 +195,12 @@ namespace Battleship
                     break;
                 }
             }
-            //
+            // Hit
             everyHit.Add(xy);
             foreach (Ship ship in playerShips)
             {
                 if (ship.Coordinates.Contains(xy))
                 {
-                    MessageBox.Show("Hit SHIP");
                     hitCoor.Add(xy);
                     hunt = true;
                     currentShip = new Ship(new List<int>(ship.Coordinates));
@@ -227,8 +219,6 @@ namespace Battleship
                 if (name != "player") Enemy.LostMessage();
                 MessageBox.Show("You won :)", "VICTORY", MessageBoxButton.OK);
                 System.Windows.Application.Current.Shutdown();
-
-
             }
         }
         public void LostMessage()
