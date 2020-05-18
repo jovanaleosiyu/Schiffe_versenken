@@ -91,7 +91,6 @@ namespace Battleship
             if(Hit(x, y)) // player hits
             {
                 //Ki
-                Random rand = new Random();
                 MessageBox.Show("computer's turn");
                 GameWindow player =  (GameWindow)Window.GetWindow(rec);
                 player.ComputerTurn();
@@ -99,8 +98,11 @@ namespace Battleship
             
         }
         /// <summary>
-        /// Returns an array of ships with random coordinates (that dont collide)
+        /// Land a hit on this board
         /// </summary>
+        /// <param name="x">x-coordinate</param>
+        /// <param name="y">y-coordinate</param>
+        /// <returns>if hit or xy is already open</returns>
         public bool Hit(int x, int y)
         {
             // Already hit
@@ -137,6 +139,9 @@ namespace Battleship
             }
             return true;
         }
+        /// <summary>
+        /// Returns an array of ships with random coordinates (that dont collide)
+        /// </summary>
         public static Ship[] GenerateShips()
         {
             Random random = new Random();
