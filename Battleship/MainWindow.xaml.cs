@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Media; // Sounds
 
 namespace Battleship
 {
@@ -29,6 +30,10 @@ namespace Battleship
         ImageBrush notsetship_hori = new ImageBrush(new BitmapImage(new Uri(@"..\..\Images\notsetship_hori.png", UriKind.Relative)));
         ImageBrush ship_hori = new ImageBrush(new BitmapImage(new Uri(@"..\..\Images\ship_hori.png", UriKind.Relative)));
         ImageBrush ship_verti = new ImageBrush(new BitmapImage(new Uri(@"..\..\Images\ship_verti.png", UriKind.Relative)));
+        // Sounds
+        SoundPlayer select_sound = new SoundPlayer(@"..\..\Sounds\select.wav");
+        SoundPlayer turn_sound = new SoundPlayer(@"..\..\Sounds\turn.wav");
+        SoundPlayer place_sound = new SoundPlayer(@"..\..\Sounds\selected.wav");
         // Variablen für ui
         List<Ship> allreadySetShips;
         const int boardLength = 9; // 9x9 Fields
@@ -143,6 +148,7 @@ namespace Battleship
                 deleteShip = null;
             }
             //Create a Ship and add it to the list
+            select_sound.Play();
             List<int> shipCoordinate;
             if (isHori)
             {
@@ -177,6 +183,7 @@ namespace Battleship
         private void turn()
         {
             isHori = !isHori;
+            turn_sound.Play();
             if (deleteShip != null)
             {
                 foreach (int coor in deleteShip.Coordinates)
@@ -189,6 +196,7 @@ namespace Battleship
         private void place()
         {
             if (deleteShip == null) return;
+            place_sound.Play();
             foreach (int coor in deleteShip.Coordinates)
             {
                 ImageBrush img;

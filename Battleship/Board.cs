@@ -8,7 +8,7 @@ using System.Windows.Shapes;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-
+using System.Media;
 namespace Battleship
 {
     public class Board
@@ -25,6 +25,10 @@ namespace Battleship
         ImageBrush ship_hori = new ImageBrush(new BitmapImage(new Uri(@"..\..\Images\ship_hori.png", UriKind.Relative)));
         ImageBrush shiphit_verti = new ImageBrush(new BitmapImage(new Uri(@"..\..\Images\ship_hit_verti.png", UriKind.Relative)));
         ImageBrush ship_verti = new ImageBrush(new BitmapImage(new Uri(@"..\..\Images\ship_verti.png", UriKind.Relative)));
+        // Sounds
+        SoundPlayer hit_sound = new SoundPlayer(@"..\..\Sounds\hit.wav");
+        SoundPlayer hitwater_sound = new SoundPlayer(@"..\..\Sounds\hitwater.wav");
+        SoundPlayer sunk_sound = new SoundPlayer(@"..\..\Sounds\explosion.wav");
         // Properties
         public Ship[] Ships { get; set; }
         public List<int> HitShips { get; set; }
@@ -120,16 +124,20 @@ namespace Battleship
                         else img = shiphit_verti;
                         Fields[x, y].Fill = img;
                         OpenBoardFields[x, y].Fill = img;
-                        if (ship.Coordinates.Count == 0) {
-                            MessageBox.Show("Ship destroyed","BOOM!!");
+                        if (ship.Coordinates.Count == 0)
+                        {
+                            sunk_sound.Play();
+                            MessageBox.Show("Ship destroyed", "BOOM!!");
                             GameWindow player = (GameWindow)Window.GetWindow(BoardGrid);
                             player.UpdateLabels();
                         }
+                        else hit_sound.Play();
                         break;
                     }
             // if not hit
             if (!hit)
             {
+                hitwater_sound.Play();
                 if (Fields[x, y].Fill == waterhit)
                     return false;
                 Fields[x, y].Fill = waterhit;
