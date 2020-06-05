@@ -103,5 +103,16 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\logo.png" />
+    <Resource Include="Images\notsetship_hori.png" />
+    <Resource Include="Images\notsetship_verti.png" />
+    <Resource Include="Images\ship_hit_hori.png" />
+    <Resource Include="Images\ship_hit_verti.png" />
+    <Resource Include="Images\ship_hori.png" />
+    <Resource Include="Images\ship_verti.png" />
+    <Resource Include="Images\water.png" />
+    <Resource Include="Images\water_hit.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
