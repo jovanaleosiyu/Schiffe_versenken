@@ -217,14 +217,16 @@ namespace Battleship
                 timer.Stop();
                 Enemy.StopTime();
                 if (name != "player") Enemy.LostMessage();
-                MessageBox.Show("You won :)", "VICTORY", MessageBoxButton.OK);
-                System.Windows.Application.Current.Shutdown();
+                MessageBox.Show("You won :)", "VICTORY", MessageBoxButton.OK); 
+                System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
+                Application.Current.Shutdown();
             }
         }
         public void LostMessage()
         {
-            MessageBox.Show("You lost :(", "DEFEAT", MessageBoxButton.OK);
-            System.Windows.Application.Current.Shutdown();
+            MessageBox.Show("You lost :(", "DEFEAT", MessageBoxButton.OK); 
+            System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
+            Application.Current.Shutdown();
         }
         public void StopTime()
         {

@@ -9,6 +9,8 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Media;
+using System.Windows.Threading;
+
 namespace Battleship
 {
     public class Board
@@ -36,6 +38,11 @@ namespace Battleship
         public Grid BoardGrid { get; set; }
         public Grid OpenBoardGrid { get; }
         public Rectangle[,] OpenBoardFields { get; set; }
+        //
+        bool canClick = true;
+        DispatcherTimer timer;
+        int delay = 1; // seconds 
+        GameWindow player;
         /// <summary>
         /// Constructor
         /// </summary>
@@ -45,6 +52,10 @@ namespace Battleship
             HitShips = new List<int>();
             BoardGrid = new Grid();
             OpenBoardGrid = new Grid();
+            // timer
+            timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(delay);
+            timer.Tick += timer_Tick;
             // Generate fields/Board
             Fields = new Rectangle[boardLength, boardLength];
             OpenBoardFields = new Rectangle[boardLength, boardLength];
@@ -79,6 +90,7 @@ namespace Battleship
         /// </summary>
         public void Click(object sender, RoutedEventArgs e)
         {
+            if (!canClick) return;
             Rectangle rec = (Rectangle)sender;
             int x = 0;
             int y = 0;
@@ -94,11 +106,17 @@ namespace Battleship
                     }
             if(Hit(x, y)) // player hits
             {
-                //MessageBox.Show("computer's turn");
-                GameWindow player =  (GameWindow)Window.GetWindow(rec);
-                player.ComputerTurn(); // AI
+                player =  (GameWindow)Window.GetWindow(rec);
+                canClick = false;
+                timer.Start();// AI
             }
             
+        }
+        void timer_Tick(object sender, EventArgs e) // Delay Computer turn
+        {
+            timer.Stop();
+            player.ComputerTurn();
+            canClick = true;
         }
         /// <summary>
         /// Land a hit on this board
@@ -137,9 +155,9 @@ namespace Battleship
             // if not hit
             if (!hit)
             {
-                hitwater_sound.Play();
                 if (Fields[x, y].Fill == waterhit)
                     return false;
+                hitwater_sound.Play();
                 Fields[x, y].Fill = waterhit;
                 OpenBoardFields[x, y].Fill = waterhit;
                 return true;
