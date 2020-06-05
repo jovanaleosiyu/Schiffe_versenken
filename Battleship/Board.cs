@@ -106,7 +106,10 @@ namespace Battleship
                     }
             if(Hit(x, y)) // player hits
             {
-                player =  (GameWindow)Window.GetWindow(rec);
+                player = (GameWindow)Window.GetWindow(rec);
+                GameWindow computer = player.Enemy;
+                player.LblTurnDisplay.Content = "Wait ...";
+                computer.LblTurnDisplay.Content = "Computer Turn ...";
                 canClick = false;
                 timer.Start();// AI
             }
@@ -117,6 +120,9 @@ namespace Battleship
             timer.Stop();
             player.ComputerTurn();
             canClick = true;
+            GameWindow computer = player.Enemy;
+            computer.LblTurnDisplay.Content = "Wait ...";
+            player.LblTurnDisplay.Content = "Your Turn ...";
         }
         /// <summary>
         /// Land a hit on this board

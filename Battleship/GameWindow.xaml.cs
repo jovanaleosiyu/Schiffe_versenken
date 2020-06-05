@@ -39,7 +39,6 @@ namespace Battleship
         //time
         int time = 0;
         DispatcherTimer timer;
-        //
         public GameWindow Enemy { get; set; }
         string name;
         public Board EnemyBoard { get; set; }
@@ -93,6 +92,8 @@ namespace Battleship
             MyGrid.Children.Add(OwnBoard.OpenBoardGrid);
             Grid.SetColumn(OwnBoard.OpenBoardGrid, 1);
             UpdateLabels();
+            //Display Turn 
+            if(name == "computer") LblTurnDisplay.Content = "Wait ...";
         }
         void timer_Tick(object sender, EventArgs e)
         {

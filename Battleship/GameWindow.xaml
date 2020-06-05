@@ -16,7 +16,7 @@
         <Grid VerticalAlignment="Top" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
-                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Label Name="LblTurnDisplay" Padding="50 0 0 0" FontFamily="Candara Light" VerticalContentAlignment="Center"  FontSize="40">Your Turn ...</Label>
