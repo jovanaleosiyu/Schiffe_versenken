@@ -8,19 +8,32 @@
         Title="GameWindow" Height="1080" Width="1920"
         WindowState="Maximized"
         ResizeMode="NoResize">
-    <Grid Name="MyGrid">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <Label VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.ColumnSpan="2" FontSize="80" FontFamily="Candara Light">BATTLESHIP</Label>
-        <Grid VerticalAlignment="Center" Width="300" HorizontalAlignment="Center" Grid.ColumnSpan="2">
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            <Label HorizontalAlignment="Center" Name="LblTimer" FontSize="80" FontFamily="Calibri Light" >00:00</Label>
-            <Label HorizontalAlignment="Center" Grid.Row="1" Name="LblShip" FontSize="60" FontFamily="Calibri Light" >SHIPS: X</Label>
-        </Grid>
+  <Grid Name="MyGrid">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition/>
+      <ColumnDefinition/>
+    </Grid.ColumnDefinitions>
+    <Grid VerticalAlignment="Top" Grid.ColumnSpan="2">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition/>
+        <ColumnDefinition Width="3*"/>
+        <ColumnDefinition/>
+      </Grid.ColumnDefinitions>
+      <!--<Image Source="../../Images/logo.svg" /> -->
+      <Rectangle>
+        <Rectangle.Fill>
+          <ImageBrush ImageSource="..\..\Images\ship_verti.png" />
+        </Rectangle.Fill>
+      </Rectangle>
+      <!--<Label  HorizontalContentAlignment="Center" FontFamily="Candara Light" VerticalContentAlignment="Center"  FontSize="80" >BATTLESHIP</Label>-->
     </Grid>
+    <Grid VerticalAlignment="Center" Width="300" HorizontalAlignment="Center" Grid.ColumnSpan="2">
+      <Grid.RowDefinitions>
+        <RowDefinition/>
+        <RowDefinition/>
+      </Grid.RowDefinitions>
+      <Label HorizontalAlignment="Center" Name="LblTimer" FontSize="80" FontFamily="Calibri Light" >00:00</Label>
+      <Label HorizontalAlignment="Center" Grid.Row="1" Name="LblShip" FontSize="60" FontFamily="Calibri Light" >SHIPS: X</Label>
+    </Grid>
+  </Grid>
 </Window>
