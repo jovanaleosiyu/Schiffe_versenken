@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="BATTLESHIP | PLACE SHIP" Height="1080" Width="1920" KeyDown="Keydown"
         WindowState="Maximized"
-        ResizeMode="NoResize">
+        ResizeMode="NoResize" Icon="Images/logo.ico">
 
     <Grid HorizontalAlignment="Center">
         <Grid Width="600" Name="MyGrid">
