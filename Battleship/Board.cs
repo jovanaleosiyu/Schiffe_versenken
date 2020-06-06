@@ -41,7 +41,7 @@ namespace Battleship
         //
         bool canClick = true;
         DispatcherTimer timer;
-        int delay = 1; // seconds 
+        double delay = 1.5; // seconds 
         GameWindow player;
         /// <summary>
         /// Constructor

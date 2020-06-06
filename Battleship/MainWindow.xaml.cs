@@ -70,7 +70,7 @@ namespace Battleship
             Grid.SetColumnSpan(uiGrid, 2);
             MyGrid.Children.Add(uiGrid);
         }
-        public void Click(object sender, RoutedEventArgs e)
+        public void Click(object sender, RoutedEventArgs e) 
         {
 
             Rectangle rec = (Rectangle)sender;
@@ -93,7 +93,7 @@ namespace Battleship
             {
                 if (y + lengthOfShips[0] > boardLength)// ship coordinate cant collide with board-end
                 {
-                    MessageBox.Show("Du kannst das Schiff nicht hierhersetzen", "Das geht sich nicht aus, Meier");
+                    MessageBox.Show("You can't place it here.", "Not enough Place");
                     return;
                 }
                 foreach (Ship ship in allreadySetShips)   // Loops through already placed ships
@@ -169,7 +169,6 @@ namespace Battleship
                 }
             }
             deleteShip = new Ship(shipCoordinate);
-
 
         }
         private void BtnTurn_Click(object sender, RoutedEventArgs e)
