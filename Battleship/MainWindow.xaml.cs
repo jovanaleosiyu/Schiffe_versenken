@@ -206,6 +206,7 @@ namespace Battleship
             allreadySetShips.Add(deleteShip);
             deleteShip = null;
             lengthOfShips.RemoveAt(0);
+            LblPlaceShips.Content = "PLACE " + lengthOfShips.Count.ToString() + " SHIPS";
             if (lengthOfShips.Count <= 0)
             {
                 this.Visibility = Visibility.Collapsed;
@@ -234,7 +235,7 @@ namespace Battleship
             {
                 place();
             }
-            else if(e.Key == Key.T)
+            else if(e.Key == Key.R)
             {
                 turn();
             }
