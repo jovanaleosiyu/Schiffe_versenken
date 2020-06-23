@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using System.Drawing;
+using System.Windows.Forms;
 namespace Battleship
 {
     /// <summary>
@@ -97,6 +98,10 @@ namespace Battleship
             if (name == "computer")
             {
                 LblTurnDisplay.Content = "Wait ...";
+                Screen s = Screen.AllScreens[1];
+                System.Drawing.Rectangle r = s.WorkingArea;
+                Top = r.Top;
+                Left = r.Left;
             }
         }
         void timer_Tick(object sender, EventArgs e)
@@ -222,16 +227,16 @@ namespace Battleship
                 timer.Stop();
                 Enemy.StopTime();
                 if (name != "player") Enemy.LostMessage();
-                MessageBox.Show("You won :)", "VICTORY", MessageBoxButton.OK); 
-                System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
-                Application.Current.Shutdown();
+                System.Windows.MessageBox.Show("You won :)", "VICTORY", MessageBoxButton.OK); 
+                System.Diagnostics.Process.Start(System.Windows.Application.ResourceAssembly.Location);
+                System.Windows.Application.Current.Shutdown();
             }
         }
         public void LostMessage()
         {
-            MessageBox.Show("You lost :(", "DEFEAT", MessageBoxButton.OK); 
-            System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
-            Application.Current.Shutdown();
+            System.Windows.MessageBox.Show("You lost :(", "DEFEAT", MessageBoxButton.OK); 
+            System.Diagnostics.Process.Start(System.Windows.Application.ResourceAssembly.Location);
+            System.Windows.Application.Current.Shutdown();
         }
         public void StopTime()
         {
