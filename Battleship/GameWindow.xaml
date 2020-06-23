@@ -7,7 +7,8 @@
         mc:Ignorable="d"
         Title="GameWindow" Height="1080" Width="1920"
         WindowState="Maximized"
-        ResizeMode="NoResize" Icon="Images/logo.ico">
+        WindowStartupLocation="Manual"
+        ResizeMode="CanResize" Icon="Images/logo.ico">
     <Grid Name="MyGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>

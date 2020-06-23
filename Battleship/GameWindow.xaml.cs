@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using System.Drawing;
 namespace Battleship
 {
     /// <summary>
@@ -93,7 +94,10 @@ namespace Battleship
             Grid.SetColumn(OwnBoard.OpenBoardGrid, 1);
             UpdateLabels();
             //Display Turn 
-            if(name == "computer") LblTurnDisplay.Content = "Wait ...";
+            if (name == "computer")
+            {
+                LblTurnDisplay.Content = "Wait ...";
+            }
         }
         void timer_Tick(object sender, EventArgs e)
         {
